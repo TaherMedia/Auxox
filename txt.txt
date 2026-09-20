@@ -1,0 +1,4 @@
+curl -X POST "https://api.telegram.org/bot<TOKEN>/setWebhook" ^
+  -d "url=https://YOUR-WORKER.workers.dev/webhook" ^
+  -d "secret_token=YOUR_SECRET" ^
+  -d 'allowed_updates=["business_connection","business_message","deleted_business_messages"]'
