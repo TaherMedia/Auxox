@@ -1,0 +1,26 @@
+name = "auxox-bot"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+# D1 database binding — create with:
+#   wrangler d1 create auxox-db
+# then paste the returned database_id below.
+[[d1_databases]]
+binding = "DB"
+database_name = "auxox-db"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# Name-clock / premium-expiry / invoice-sweep cron — fires every minute.
+# runNameClockJob() reads the `name_auto_update_interval` setting (Advanced
+# Settings in the admin panel) to skip ticks if you want it slower than 60s;
+# it never needs to run faster than this schedule.
+[triggers]
+crons = ["* * * * *"]
+
+# Raises the CPU-time budget for the broadcast/forward loops and the cron
+# handler when many users are enrolled. Only takes effect on a Workers Paid
+# plan — the Free plan hard-caps every invocation (including Cron Triggers)
+# at 10ms CPU time regardless of this setting, which will not be enough
+# headroom once you have more than a handful of users. See README.md.
+[limits]
+cpu_ms = 300000
